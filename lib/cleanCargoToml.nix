@@ -102,4 +102,4 @@ in
 { cargoToml ? throw "either cargoToml or cargoTomlContents must be specified"
 , cargoTomlContents ? builtins.readFile cargoToml
 }:
-cleanCargoToml (builtins.fromTOML cargoTomlContents)
+cleanCargoToml (builtins.fromTOML (builtins.unsafeDiscardStringContext cargoTomlContents))
