@@ -46,7 +46,7 @@ let
     '') packages}
   '';
 
-  parsedCargoTomls = map (p: builtins.fromTOML (readFile p)) cargoConfigs;
+  parsedCargoTomls = map (p: builtins.fromTOML (builtins.unsafeDiscardStringContext (readFile p))) cargoConfigs;
   allCargoRegistries = flatten (map (c: c.registries or [ ]) parsedCargoTomls);
   allCargoRegistryPairs = flatten (map (mapAttrsToList (name: value: { inherit name value; })) allCargoRegistries);
   allCargoRegistryPairsWithIndex = filter (r: r ? value.index) allCargoRegistryPairs;
